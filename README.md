@@ -1,7 +1,7 @@
 # Quantori
 
 ## Part 1: Functions
-Write a script script.py with two functions inside: convert_dna_to_rna and convert_rna_to_protein that model these two processes. These functions must have a string sequence as input and output (I'll put examples to the thread below).
+Write a script script.py with two functions inside: convert_dna_to_rna and convert_rna_to_protein that model these two processes. These functions must have a string sequence as input and output.
 For these functions to work, you'll probably need data describing how DNA and RNA bases correspond, and same for RNA <-> protein conversion. Put these files in the /data directory in the project root.
 ### Examples
 1. DNA -> RNA input and output examples:
