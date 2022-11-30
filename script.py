@@ -19,13 +19,18 @@ def convert_dna_to_rna(dna: str, method="transformation") -> str:
     :param dna: string, DNA sequence
     :return: string, RNA sequence
     """
-    assert isinstance(dna, str), "Invalid input argument: DNA sequence! " \
-                                 "String is expected."
+    if not isinstance(dna, str):
+        raise Exception("Invalid DNA input argument! String is expected.") \
+            from TypeError
+
     dna = dna.strip().upper()
-    assert isinstance(method, str), "Invalid input argument: " \
-                                    "conversion method!" \
-                                    " String is expected."
-    method = method.strip().lower()
+
+    try:
+        method = method.strip().lower()
+    except TypeError:
+        print(f"Unsupported method is provided: {method}. "
+              f"Standard 'transformation' will be performed.")
+        method = "transformation"
 
     rna = ""
 
@@ -36,9 +41,10 @@ def convert_dna_to_rna(dna: str, method="transformation") -> str:
             elif method == "transcription":
                 rna += dna_to_rna_complement_dict[base]
     except KeyError:
-        raise AssertionError(f"Invalid base encountered in DNA: {base}."
-                             f"\nExpected one of 4 bases: 'A', 'G', 'C', 'T'."
-                             f"\nConverted RNA sequence is: {rna}")
+        raise Exception(f"Invalid base encountered in DNA: {base}."
+                        f"\nExpected one of 4 bases: 'A', 'G', 'C', 'T'."
+                        f"\nConverted RNA sequence is: {rna}") \
+            from KeyError
     return rna
 
 
@@ -51,19 +57,24 @@ def convert_rna_to_protein(rna: str) -> str:
     :param rna: string, RNA sequence
     :return: string, amino acid sequence
     """
-    assert isinstance(rna, str), "Invalid input argument! String is expected."
-    rna = rna.strip().upper()
+    if not isinstance(rna, str):
+        raise Exception("Invalid RNA input argument! String is expected.") \
+            from TypeError
 
+    rna = rna.strip().upper()
     protein = ""
+
     try:
+        # triplets always have 3 nucleotides, that's biology
         for triplet in range(0, len(rna), 3):
             codon = rna[triplet:triplet + 3]
             if len(codon) == 3:
                 protein += rna_to_aa_dict[codon]
     except KeyError:
-        raise AssertionError(f"Invalid triplet encountered in RNA: {codon}."
-                             f"\nExpected one of 4 bases: 'A', 'G', 'C', 'U'."
-                             f"\nConverted amino acid sequence is: {protein}")
+        raise Exception(f"Invalid triplet encountered in RNA: {codon}."
+                        f"\nExpected one of 4 bases: 'A', 'G', 'C', 'U'."
+                        f"\nConverted amino acid sequence is: {protein}") \
+            from KeyError
     return protein
 
 
@@ -80,18 +91,22 @@ def plot_gc_content(genomic_data: str, bin_size: int = 100,
     :param bin_size: int, denotes a width of a bin (default is 100 characters)
     :return: saves plot in the current directory
     """
-    assert isinstance(genomic_data, str), "Invalid input argument: " \
-                                          "DNA sequence! String is expected."
-    genomic_data = genomic_data.strip().upper()
+    if not isinstance(genomic_data, str):
+        raise Exception("Invalid input argument: "
+                        "DNA sequence! String is expected.") from TypeError
 
-    assert isinstance(file_format, str), "Invalid input argument: " \
-                                         "file format! String is expected."
+    if not isinstance(file_format, str):
+        raise Exception("Invalid input argument: file format! "
+                        "String is expected.") from TypeError
+
+    if not isinstance(bin_size, int):
+        raise Exception("Invalid input argument: subsequence size! "
+                        "String is expected.") from TypeError
+
+    genomic_data = genomic_data.strip().upper()
     file_format = file_format.strip().lower()
 
-    assert isinstance(bin_size, int), "Invalid input argument: " \
-                                      "subsequence size! Integer is expected."
-
-    # will store tuples of values:
+    # this list will store tuples of values:
     # position of the last nucleotide of the subsequence in the full sequence,
     # GC-content in %
     gc_all_bins = []
@@ -118,8 +133,10 @@ def plot_gc_content(genomic_data: str, bin_size: int = 100,
 
 
 if __name__ == "__main__":
-    # expected: script_name DNA_seq [optional: method]
-    assert len(sys.argv) >= 1
+
+    if len(sys.argv) < 1:
+        raise Exception("Missing compulsory arguments. "
+                        "Expected: script_name DNA_seq [optional: method]")
 
     dna_in = sys.argv[1]
 
