@@ -20,11 +20,11 @@ def convert_dna_to_rna(dna: str, method="transformation") -> str:
     :return: string, RNA sequence
     """
     if not isinstance(dna, str):
-        raise Exception("Invalid DNA input argument! String is expected.") \
-            from TypeError
+        raise TypeError("Invalid DNA input argument! String is expected.")
 
     dna = dna.strip().upper()
 
+    # handle invalid method argument
     try:
         method = method.strip().lower()
     except TypeError:
@@ -32,19 +32,26 @@ def convert_dna_to_rna(dna: str, method="transformation") -> str:
               f"Standard 'transformation' will be performed.")
         method = "transformation"
 
+    # find which method to use for conversion
+    if method == "transformation":
+        refer_dict = dna_to_rna_dict
+    elif method == "transcription":
+        refer_dict = dna_to_rna_complement_dict
+    else:
+        print(f"Unsupported method is provided: {method}. "
+              f"Standard 'transformation' will be performed.")
+        refer_dict = dna_to_rna_dict
+
     rna = ""
 
+    # convert each base according to the appropriate conversion method
     try:
         for base in dna:
-            if method == "transformation":
-                rna += dna_to_rna_dict[base]
-            elif method == "transcription":
-                rna += dna_to_rna_complement_dict[base]
+            rna += refer_dict[base]
     except KeyError:
-        raise Exception(f"Invalid base encountered in DNA: {base}."
-                        f"\nExpected one of 4 bases: 'A', 'G', 'C', 'T'."
-                        f"\nConverted RNA sequence is: {rna}") \
-            from KeyError
+        raise KeyError(f"Invalid base encountered in DNA: {base}."
+                       f"\nExpected one of 4 bases: 'A', 'G', 'C', 'T'."
+                       f"\nConverted RNA sequence is: {rna}")
     return rna
 
 
@@ -58,12 +65,12 @@ def convert_rna_to_protein(rna: str) -> str:
     :return: string, amino acid sequence
     """
     if not isinstance(rna, str):
-        raise Exception("Invalid RNA input argument! String is expected.") \
-            from TypeError
+        raise TypeError("Invalid RNA input argument! String is expected.")
 
     rna = rna.strip().upper()
     protein = ""
 
+    # translate each triplet into amino acid
     try:
         # triplets always have 3 nucleotides, that's biology
         for triplet in range(0, len(rna), 3):
@@ -71,10 +78,9 @@ def convert_rna_to_protein(rna: str) -> str:
             if len(codon) == 3:
                 protein += rna_to_aa_dict[codon]
     except KeyError:
-        raise Exception(f"Invalid triplet encountered in RNA: {codon}."
-                        f"\nExpected one of 4 bases: 'A', 'G', 'C', 'U'."
-                        f"\nConverted amino acid sequence is: {protein}") \
-            from KeyError
+        raise KeyError(f"Invalid triplet encountered in RNA: {codon}."
+                       f"\nExpected one of 4 bases: 'A', 'G', 'C', 'U'."
+                       f"\nConverted amino acid sequence is: {protein}")
     return protein
 
 
@@ -92,16 +98,16 @@ def plot_gc_content(genomic_data: str, bin_size: int = 100,
     :return: saves plot in the current directory
     """
     if not isinstance(genomic_data, str):
-        raise Exception("Invalid input argument: "
-                        "DNA sequence! String is expected.") from TypeError
+        raise TypeError("Invalid input argument: "
+                        "DNA sequence! String is expected.")
 
     if not isinstance(file_format, str):
-        raise Exception("Invalid input argument: file format! "
-                        "String is expected.") from TypeError
+        raise TypeError("Invalid input argument: file format! "
+                        "String is expected.")
 
     if not isinstance(bin_size, int):
-        raise Exception("Invalid input argument: subsequence size! "
-                        "String is expected.") from TypeError
+        raise TypeError("Invalid input argument: subsequence size! "
+                        "String is expected.")
 
     genomic_data = genomic_data.strip().upper()
     file_format = file_format.strip().lower()
