@@ -1,5 +1,8 @@
-# dna bases and corresponding RNA bases
+# DNA bases and corresponding RNA bases
 dna_to_rna_dict = {"A": "A", "C": "C", "G": "G", "T": "U"}
+
+# translation of DNA bases into RNA bases according to complementarity
+dna_to_rna_complement_dict = {"A": "U", "C": "G", "G": "C", "T": "A"}
 
 # RNA base triplets and corresponding amino acids or stop codon (".")
 rna_to_aa_dict = {'AUA': 'I', 'AUC': 'I', 'AUU': 'I', 'AUG': 'M',
