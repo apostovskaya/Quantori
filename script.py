@@ -1,4 +1,12 @@
 import sys
+sys.path.extend(
+    ['/Users/apost/Documents/CloudMail/PhD_2020/Self-education'
+     '/Quantori_Py/Quantori', '/Users/apost/Documents/CloudMail/PhD_2020'
+                              '/Self-education/Quantori_Py/Quantori/src',
+     '/Users/apost/Documents/CloudMail/PhD_2020/Self-education/'
+     'Quantori_Py/Quantori/data'])
+
+import random
 import matplotlib.pyplot as plt
 from data.data import \
     dna_to_rna_dict, \
@@ -109,8 +117,8 @@ def plot_gc_content(genomic_data: str, bin_size: int = 100,
         raise TypeError("Invalid input argument: subsequence size! "
                         "String is expected.")
 
-    genomic_data = genomic_data.strip().upper()
-    file_format = file_format.strip().lower()
+    genomic_data = genomic_data.strip("(){}<>[]. ").upper()
+    file_format = file_format.strip("(){}<>[]. ").lower()
 
     # this list will store tuples of values:
     # position of the last nucleotide of the subsequence in the full sequence,
@@ -129,12 +137,12 @@ def plot_gc_content(genomic_data: str, bin_size: int = 100,
     # plotting
     location, content = zip(*gc_all_bins)
     plt.plot(location, content, linestyle="--", marker=".", color="tab:blue")
-    plt.xticks(location[::2])
+    plt.xticks(location[::2], rotation=45)
     plt.xlabel("genome position of the last nucleotide of the subsequence")
     plt.ylabel("GC-content in the window, %")
     plt.title(f"GC-content for subsequences of length {bin_size}")
     plt.tight_layout()
-    plt.savefig(f"./gc_content_bins_size{bin_size}.{file_format}")
+    plt.savefig(f"./data/output/gc_content_bins_size{bin_size}.{file_format}")
     plt.close()
 
 
@@ -158,3 +166,30 @@ if __name__ == "__main__":
     # translate RNA to protein
     protein_out = convert_rna_to_protein(rna_out)
     print(f"Translation of RNA to protein: {protein_out}")
+
+    # mock-up run of GC-content plotting for short sequences
+    genome = dna_in
+    if len(genome) < 200:
+        genome_size = 10**5
+        genome *= genome_size
+        genome = ''.join(random.sample(genome, len(genome)))
+
+    try:
+        len_subsequence = int(sys.argv[3])
+        if len(sys.argv) > 4:
+            plot_format = sys.argv[4]
+            plot_gc_content(genome, len_subsequence, plot_format)
+        else:
+            plot_format = "png"
+            plot_gc_content(genome, len_subsequence)
+        print(f"gc_content_bins_size{len_subsequence}.{plot_format} plot "
+              f"of GC-content for every subsequence of size {len_subsequence} "
+              f"is generated and saved in the ./data/output directory.")
+    except IndexError:
+        smaller_genome = genome[:5000]
+        plot_gc_content(smaller_genome)
+        print("The plot of GC-content is generated with the default "
+              "parameters: .png format,"
+              "GC-content for every subsequence of length 100 bases.")
+        print(f"gc_content_bins_size100.png plot is saved "
+              f"in the ./data/output directory.")
