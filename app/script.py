@@ -2,13 +2,13 @@ import sys
 sys.path.extend(
     ['/Users/apost/Documents/CloudMail/PhD_2020/Self-education'
      '/Quantori_Py/Quantori', '/Users/apost/Documents/CloudMail/PhD_2020'
-                              '/Self-education/Quantori_Py/Quantori/src',
+                              '/Self-education/Quantori_Py/Quantori/app',
      '/Users/apost/Documents/CloudMail/PhD_2020/Self-education/'
-     'Quantori_Py/Quantori/data'])
+     'Quantori_Py/Quantori/app/data'])
 
 import random
 import matplotlib.pyplot as plt
-from data.data import \
+from app.data.data import \
     dna_to_rna_dict, \
     dna_to_rna_complement_dict, \
     rna_to_aa_dict
@@ -142,7 +142,8 @@ def plot_gc_content(genomic_data: str, bin_size: int = 100,
     plt.ylabel("GC-content in the window, %")
     plt.title(f"GC-content for subsequences of length {bin_size}")
     plt.tight_layout()
-    plt.savefig(f"./data/output/gc_content_bins_size{bin_size}.{file_format}")
+    plt.savefig(f"./app/data/output/"
+                f"gc_content_bins_size{bin_size}.{file_format}")
     plt.close()
 
 

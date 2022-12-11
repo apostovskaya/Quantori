@@ -1,5 +1,5 @@
 import unittest
-from script import convert_rna_to_protein
+from app.script import convert_rna_to_protein
 
 
 class TestRnaProtein(unittest.TestCase):

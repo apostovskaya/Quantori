@@ -1,5 +1,5 @@
 import unittest
-from script import convert_dna_to_rna
+from app.script import convert_dna_to_rna
 
 
 class TestDnaRna(unittest.TestCase):

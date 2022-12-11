@@ -1,5 +1,5 @@
-from src.db_design import DNA, Codon
-from src.db_build import Session
+from db_design import DNA, Codon
+from db_build import Session
 
 # DNA bases and corresponding RNA bases
 dna_to_rna_dict = {}
