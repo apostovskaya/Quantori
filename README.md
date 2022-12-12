@@ -6,7 +6,7 @@ The app provides the following functionality:
 * RNA to peptide translation;
 * Calculating and plotting GC-content in a DNA sub-sequence of a given length.
 
-The project was build incrementally using *Python*, *SQLAlchemy*, *Matplotlib*, *PostgreSQL*, *Docker*, *Unittest*.
+The project was built incrementally using *Python*, *SQLAlchemy*, *Matplotlib*, *PostgreSQL*, *Docker*, *Unittest*.
 
 The project consisted of 5 sub-goals.
 
@@ -15,7 +15,7 @@ A script *script.py* with two functions inside: convert_dna_to_rna and convert_r
 These functions have a string sequence as input and output.
 The data describing how DNA<->RNA and RNA<->amino_acid conversion is performed are in the /data/data.py.
 
-1. ***convert_dna_to_rna***
+1. ```convert_dna_to_rna```
 
 Converts DNA sequence into RNA sequence.
 In the default 'transform' mode, simple substitution of DNA bases for
@@ -37,7 +37,7 @@ transformation, transcription)
 - TATGAAAAACTCAAA -> UAUGAAAAACUCAAA
 - CCCGTCCTTGATTGGCTTGAAGAGAAGTTT -> CCCGUCCUUGAUUGGCUUGAAGAGAAGUUU
 
-2. ***convert_rna_to_protein***
+2. ```convert_rna_to_protein```
 
 Converts RNA sequence (each RNA base triplet) into amino acid sequence
 according to translation rules. Stop codon is represented by a '.'
@@ -78,15 +78,17 @@ A function that plots G-C ratio in a DNA molecule and saves the resulting plot t
 
 The horizontal axis of the graph represents the genome position. The vertical axis shows the G-C ratio in the window. The default size of a window is 100 bases.
 
-***plot_gc_content***
+```plot_gc_content```
 
 Plots G-C ratio (GC-content in %) of every subsequence of the requested size in a DNA molecule 
 and saves the plot in a file (.png  by default). The function doesn't check
 the correctness of nucleotides, any letter will be accepted.
+```
 - :param file_format: str, desired file format of the produced plot (.png  by default)
 - :param genomic_data: string, a nucleotide sequence (genomic data)
 - :param bin_size: int, denotes a width of a bin (default is 100 characters)
 - :return: saves plot in the current directory
+```
 
 ### Part 4: Docker
 - The app is packed into a Docker container.
@@ -103,7 +105,7 @@ Write unit tests for functions from parts 1 & 3.
 1. in *db_config.py*, comment credentials for Postgres DB and release credentials for SQLite DB
 2. from Qunatori directory as working directory, run
 
-*python3 ./app/script.py [required: param1] [optional: param2] [optional: param3] [optional: param4]*
+```python3 ./app/script.py [required: param1] [optional: param2] [optional: param3] [optional: param4]```
 
 - param1 = DNA sequence (string)
 - param2 = mode: transformation or transcription of DNA to RNA (string)
@@ -112,4 +114,4 @@ Write unit tests for functions from parts 1 & 3.
 
 **Example:**
 
-*python3 ./app/script.py "ATTTGGCTACTAACAATCTA" "transcription" 5*
+```python3 ./app/script.py "ATTTGGCTACTAACAATCTA" "transcription" 5```
