@@ -1,0 +1,40 @@
+version: '3.8'
+
+services:
+  app:
+    container_name: molbiolapp
+    build:
+      context: ./app
+      dockerfile: ./Dockerfile
+#    command:
+#      - python3 script.py run
+    volumes:
+        - app_data:/app/data/output
+    networks:
+        - mynetwork
+    depends_on:
+        - db
+    links:
+        - db:db
+
+  db:
+    container_name: postgres
+    image: postgres:14-alpine
+    expose:
+      - "5432"
+    volumes:
+      - postgres_data:/app/data
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=password
+      - POSTGRES_DB=molbiol_central_dogma
+    networks:
+      - mynetwork
+volumes:
+  postgres_data:
+  app_data:
+
+
+networks:
+      mynetwork:
+          driver: bridge

@@ -1,6 +1,15 @@
 # credentials for SQLite DB
+# db_name = "molbiol_central_dogma"
+# db_info = f"sqlite:///./app/data/{db_name}"
+
+# credentials for Postgres DB
+db_user = "postgres"
+db_pswrd = "password"
+db_host = "db"
+db_port = "5432"
 db_name = "molbiol_central_dogma"
-db_info = f"sqlite:///./app/data/{db_name}"
+db_info = f"postgresql+psycopg2://{db_user}:{db_pswrd}@{db_host}:{db_port}" \
+          f"/{db_name}"
 
 # DNA and RNA bases
 dna_bases_list = ["A", "C", "G", "T"]

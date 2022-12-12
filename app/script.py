@@ -1,11 +1,4 @@
 import sys
-sys.path.extend(
-    ['/Users/apost/Documents/CloudMail/PhD_2020/Self-education'
-     '/Quantori_Py/Quantori', '/Users/apost/Documents/CloudMail/PhD_2020'
-                              '/Self-education/Quantori_Py/Quantori/app',
-     '/Users/apost/Documents/CloudMail/PhD_2020/Self-education/'
-     'Quantori_Py/Quantori/app/data'])
-
 import random
 import matplotlib.pyplot as plt
 from app.data.data import \
